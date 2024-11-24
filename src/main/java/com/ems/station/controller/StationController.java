@@ -11,9 +11,10 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.ems.station.model.Station;
+import com.ems.station.payload.StationDto;
 import com.ems.station.service.StationService;
 
 @RestController
@@ -25,35 +26,35 @@ public class StationController {
 		this.stationService = stationService;
 	}
 
-	// Create ADG
+	// Create Station
 	@PostMapping("/create")
-	public ResponseEntity<Station> createStation(@RequestBody Station station) {
-		Station createStation = stationService.createStation(station);
+	public ResponseEntity<StationDto> createStation(@RequestBody StationDto stationDto, @RequestParam int stateId) {
+		StationDto createStation = stationService.createStation(stationDto, stateId);
 
-		return new ResponseEntity<Station>(createStation, HttpStatus.CREATED);
+		return new ResponseEntity<StationDto>(createStation, HttpStatus.CREATED);
 	}
 
-	// update ADG
+	// update Station
 	@PutMapping("/update/{stationId}")
-	public ResponseEntity<Station> updateStation(@PathVariable("stationId") int stationId,
-			@RequestBody Station station) {
-		Station updateStation = stationService.updateStation(stationId, station);
-		return new ResponseEntity<Station>(updateStation, HttpStatus.OK);
+	public ResponseEntity<StationDto> updateStation(@PathVariable("stationId") int stationId,
+			@RequestBody StationDto stationDto, @RequestParam int stateId) {
+		StationDto updateStation = stationService.updateStation(stationId, stationDto, stateId);
+		return new ResponseEntity<StationDto>(updateStation, HttpStatus.OK);
 	}
 
 	// Get Station By Id
 	@GetMapping("/get/{stationId}")
-	public ResponseEntity<Station> getStationById(@PathVariable("stationId") int stationId) {
-		Station getStation = stationService.getStationById(stationId);
-		return new ResponseEntity<Station>(getStation, HttpStatus.OK);
+	public ResponseEntity<StationDto> getStationById(@PathVariable("stationId") int stationId) {
+		StationDto getStation = stationService.getStationById(stationId);
+		return new ResponseEntity<StationDto>(getStation, HttpStatus.OK);
 	}
 
 	// Get All Station
 
 	@GetMapping("/all")
-	public ResponseEntity<List<Station>> getAllStation() {
-		List<Station> stationList = stationService.stationList();
-		return new ResponseEntity<List<Station>>(stationList, HttpStatus.OK);
+	public ResponseEntity<List<StationDto>> getAllStation() {
+		List<StationDto> stationList = stationService.stationList();
+		return new ResponseEntity<List<StationDto>>(stationList, HttpStatus.OK);
 	}
 
 	// Delete Station

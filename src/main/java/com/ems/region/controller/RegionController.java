@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.ems.region.model.Region;
+import com.ems.region.payload.RegionDto;
 import com.ems.region.service.RegionService;
 
 @RestController
@@ -27,32 +27,33 @@ public class RegionController {
 
 	// Create ADG
 	@PostMapping("/create")
-	public ResponseEntity<Region> createRegion(@RequestBody Region region) {
-		Region createRegion = regionService.createRegion(region);
+	public ResponseEntity<RegionDto> createRegion(@RequestBody RegionDto region) {
+		RegionDto createRegion = regionService.createRegion(region);
 
-		return new ResponseEntity<Region>(createRegion, HttpStatus.CREATED);
+		return new ResponseEntity<RegionDto>(createRegion, HttpStatus.CREATED);
 	}
 
 	// update ADG
 	@PutMapping("/update/{regionId}")
-	public ResponseEntity<Region> updateRegion(@PathVariable("regionId") int regionId, @RequestBody Region region) {
-		Region updateRegion = regionService.updateRegion(regionId, region);
-		return new ResponseEntity<Region>(updateRegion, HttpStatus.OK);
+	public ResponseEntity<RegionDto> updateRegion(@PathVariable("regionId") int regionId,
+			@RequestBody RegionDto region) {
+		RegionDto updateRegion = regionService.updateRegion(regionId, region);
+		return new ResponseEntity<RegionDto>(updateRegion, HttpStatus.OK);
 	}
 
 	// Get Region By Id
 	@GetMapping("/get/{regionId}")
-	public ResponseEntity<Region> getRegionById(@PathVariable("regionId") int regionId) {
-		Region getRegion = regionService.getRegionById(regionId);
-		return new ResponseEntity<Region>(getRegion, HttpStatus.OK);
+	public ResponseEntity<RegionDto> getRegionById(@PathVariable("regionId") int regionId) {
+		RegionDto getRegion = regionService.getRegionById(regionId);
+		return new ResponseEntity<RegionDto>(getRegion, HttpStatus.OK);
 	}
 
 	// Get All Region
 
 	@GetMapping("/all")
-	public ResponseEntity<List<Region>> getAllRegion() {
-		List<Region> regionList = regionService.regionList();
-		return new ResponseEntity<List<Region>>(regionList, HttpStatus.OK);
+	public ResponseEntity<List<RegionDto>> getAllRegion() {
+		List<RegionDto> regionList = regionService.regionList();
+		return new ResponseEntity<List<RegionDto>>(regionList, HttpStatus.OK);
 	}
 
 	// Delete Region

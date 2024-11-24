@@ -11,9 +11,10 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.ems.circle.model.Circle;
+import com.ems.circle.payload.CircleDto;
 import com.ems.circle.service.CircleService;
 
 @RestController
@@ -29,34 +30,35 @@ public class CircleController {
 	// create Circle
 
 	@PostMapping("/create")
-	public ResponseEntity<Circle> createCircle(@RequestBody Circle circle) {
+	public ResponseEntity<CircleDto> createCircle(@RequestBody CircleDto circle, @RequestParam int zoneId) {
 
-		Circle createCircle = circleService.createCircle(circle);
-		return new ResponseEntity<Circle>(createCircle, HttpStatus.CREATED);
+		CircleDto createCircle = circleService.createCircle(circle, zoneId);
+		return new ResponseEntity<CircleDto>(createCircle, HttpStatus.CREATED);
 	}
 
 	// update Circle
 
 	@PutMapping("update/{circleId}")
-	public ResponseEntity<Circle> updateCircle(@PathVariable("circleId") int circleId, @RequestBody Circle circle) {
-		Circle updateCircle = circleService.updateCircle(circleId, circle);
-		return new ResponseEntity<Circle>(updateCircle, HttpStatus.OK);
+	public ResponseEntity<CircleDto> updateCircle(@PathVariable("circleId") int circleId, @RequestBody CircleDto circle,
+			@RequestParam int zoneId) {
+		CircleDto updateCircle = circleService.updateCircle(circleId, circle, zoneId);
+		return new ResponseEntity<CircleDto>(updateCircle, HttpStatus.OK);
 	}
 
 	// get Circle By Id
 
 	@GetMapping("/{circleId}")
-	public ResponseEntity<Circle> getCircleById(@PathVariable("circleId") int circleId) {
-		Circle getCircle = circleService.getCircle(circleId);
-		return new ResponseEntity<Circle>(getCircle, HttpStatus.OK);
+	public ResponseEntity<CircleDto> getCircleById(@PathVariable("circleId") int circleId) {
+		CircleDto getCircle = circleService.getCircle(circleId);
+		return new ResponseEntity<CircleDto>(getCircle, HttpStatus.OK);
 
 	}
 
 	// circle List
 	@GetMapping("/all")
-	public ResponseEntity<List<Circle>> getAllCircle() {
-		List<Circle> circleList = circleService.circleList();
-		return new ResponseEntity<List<Circle>>(circleList, HttpStatus.OK);
+	public ResponseEntity<List<CircleDto>> getAllCircle() {
+		List<CircleDto> circleList = circleService.circleList();
+		return new ResponseEntity<List<CircleDto>>(circleList, HttpStatus.OK);
 
 	}
 

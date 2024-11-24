@@ -2,17 +2,18 @@ package com.ems.reservationclasification.service;
 
 import java.util.List;
 
-import com.ems.reservationclasification.model.ReservationClasification;
+import com.ems.reservationclasification.payload.ReservationClasificationDto;
 
 public interface ReservationClasificationService {
-	public ReservationClasification createReservationClasification(ReservationClasification reservationClasification);
+	public ReservationClasificationDto createReservationClasification(
+			ReservationClasificationDto reservationClasificationDto);
 
-	public ReservationClasification updateReservationClasification(int reservationClasificationId,
-			ReservationClasification reservationClasification);
+	public ReservationClasificationDto updateReservationClasification(int reservationClasificationId,
+			ReservationClasificationDto reservationClasificationDto);
 
-	public ReservationClasification getReservationClasification(int reservationClasificationId);
+	public ReservationClasificationDto getReservationClasification(int reservationClasificationId);
 
-	public List<ReservationClasification> reservationClasificationList();
+	public List<ReservationClasificationDto> reservationClasificationList();
 
 	public void deleteReservationClasification(int reservationClasificationId);
 }

@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.ems.specialisation.model.Specialisation;
+import com.ems.specialisation.payload.SpecialisationDto;
 import com.ems.specialisation.service.SpecialisationService;
 
 @RestController
@@ -28,37 +28,37 @@ public class SpecialisationController {
 	// Create Specialisation
 
 	@PostMapping("/create")
-	public ResponseEntity<Specialisation> createSpecialisation(@RequestBody Specialisation specialisation) {
-		Specialisation createSpecialisation = specialisationService.createSpecialisation(specialisation);
+	public ResponseEntity<SpecialisationDto> createSpecialisation(@RequestBody SpecialisationDto specialisation) {
+		SpecialisationDto createSpecialisation = specialisationService.createSpecialisation(specialisation);
 
-		return new ResponseEntity<Specialisation>(createSpecialisation, HttpStatus.CREATED);
+		return new ResponseEntity<SpecialisationDto>(createSpecialisation, HttpStatus.CREATED);
 	}
 
 	// Update Specialisation
 
 	@PutMapping("/update/{specialisationId}")
-	public ResponseEntity<Specialisation> updateSpecialisation(@PathVariable("specialisationId") int specialisationId,
-			@RequestBody Specialisation specialisation) {
-		Specialisation updateSpecialisation = specialisationService.updateSpecialisation(specialisationId,
+	public ResponseEntity<SpecialisationDto> updateSpecialisation(
+			@PathVariable("specialisationId") int specialisationId, @RequestBody SpecialisationDto specialisation) {
+		SpecialisationDto updateSpecialisation = specialisationService.updateSpecialisation(specialisationId,
 				specialisation);
-		return new ResponseEntity<Specialisation>(updateSpecialisation, HttpStatus.OK);
+		return new ResponseEntity<SpecialisationDto>(updateSpecialisation, HttpStatus.OK);
 	}
 
 	// Get Specialisation By Id
 
 	@GetMapping("/{specialisationId}")
-	public ResponseEntity<Specialisation> getSpecialisationById(
+	public ResponseEntity<SpecialisationDto> getSpecialisationById(
 			@PathVariable("specialisationId") int specialisationId) {
-		Specialisation getSpecialisation = specialisationService.getSpecialisation(specialisationId);
-		return new ResponseEntity<Specialisation>(getSpecialisation, HttpStatus.OK);
+		SpecialisationDto getSpecialisation = specialisationService.getSpecialisation(specialisationId);
+		return new ResponseEntity<SpecialisationDto>(getSpecialisation, HttpStatus.OK);
 	}
 
 	// Get All Specialisation
 
 	@GetMapping("/")
-	public ResponseEntity<List<Specialisation>> getAllSpecialisation() {
-		List<Specialisation> specialisationList = specialisationService.specialisationList();
-		return new ResponseEntity<List<Specialisation>>(specialisationList, HttpStatus.OK);
+	public ResponseEntity<List<SpecialisationDto>> getAllSpecialisation() {
+		List<SpecialisationDto> specialisationList = specialisationService.specialisationList();
+		return new ResponseEntity<List<SpecialisationDto>>(specialisationList, HttpStatus.OK);
 	}
 
 	// Delete Specialisation

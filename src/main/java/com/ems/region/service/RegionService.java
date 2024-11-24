@@ -2,16 +2,16 @@ package com.ems.region.service;
 
 import java.util.List;
 
-import com.ems.region.model.Region;
+import com.ems.region.payload.RegionDto;
 
 public interface RegionService {
-	public Region createRegion(Region region);
+	public RegionDto createRegion(RegionDto regionDto);
 
-	public Region updateRegion(int regionId, Region region);
+	public RegionDto updateRegion(int regionId, RegionDto regionDto);
 
-	public Region getRegionById(int regionId);
+	public RegionDto getRegionById(int regionId);
 
-	public List<Region> regionList();
+	public List<RegionDto> regionList();
 
 	public void deleteRegion(int regionId);
 }

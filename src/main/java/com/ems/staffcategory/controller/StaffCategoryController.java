@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.ems.staffcategory.model.StaffCategory;
+import com.ems.staffcategory.payload.StaffCategoryDto;
 import com.ems.staffcategory.service.StaffCategoryService;
 
 @RestController
@@ -28,35 +28,36 @@ public class StaffCategoryController {
 	// Create StaffCategory
 
 	@PostMapping("/create")
-	public ResponseEntity<StaffCategory> createStaffCategory(@RequestBody StaffCategory staffCategory) {
-		StaffCategory createStaffCategory = staffCategoryService.createStaffCategory(staffCategory);
+	public ResponseEntity<StaffCategoryDto> createStaffCategory(@RequestBody StaffCategoryDto staffCategoryDto) {
+		StaffCategoryDto createStaffCategory = staffCategoryService.createStaffCategory(staffCategoryDto);
 
-		return new ResponseEntity<StaffCategory>(createStaffCategory, HttpStatus.CREATED);
+		return new ResponseEntity<StaffCategoryDto>(createStaffCategory, HttpStatus.CREATED);
 	}
 
 	// Update StaffCategory
 
 	@PutMapping("/update/{staffCategoryId}")
-	public ResponseEntity<StaffCategory> updateStaffCategory(@PathVariable("staffCategoryId") int staffCategoryId,
-			@RequestBody StaffCategory staffCategory) {
-		StaffCategory updateStaffCategory = staffCategoryService.updateStaffCategory(staffCategoryId, staffCategory);
-		return new ResponseEntity<StaffCategory>(updateStaffCategory, HttpStatus.OK);
+	public ResponseEntity<StaffCategoryDto> updateStaffCategory(@PathVariable("staffCategoryId") int staffCategoryId,
+			@RequestBody StaffCategoryDto staffCategoryDto) {
+		StaffCategoryDto updateStaffCategory = staffCategoryService.updateStaffCategory(staffCategoryId,
+				staffCategoryDto);
+		return new ResponseEntity<StaffCategoryDto>(updateStaffCategory, HttpStatus.OK);
 	}
 
 	// Get StaffCategory By Id
 
 	@GetMapping("/{staffCategoryId}")
-	public ResponseEntity<StaffCategory> getStaffCategoryById(@PathVariable("staffCategoryId") int staffCategoryId) {
-		StaffCategory getStaffCategory = staffCategoryService.getStaffCategory(staffCategoryId);
-		return new ResponseEntity<StaffCategory>(getStaffCategory, HttpStatus.OK);
+	public ResponseEntity<StaffCategoryDto> getStaffCategoryById(@PathVariable("staffCategoryId") int staffCategoryId) {
+		StaffCategoryDto getStaffCategory = staffCategoryService.getStaffCategory(staffCategoryId);
+		return new ResponseEntity<StaffCategoryDto>(getStaffCategory, HttpStatus.OK);
 	}
 
 	// Get All StaffCategory
 
 	@GetMapping("/")
-	public ResponseEntity<List<StaffCategory>> getAllStaffCategory() {
-		List<StaffCategory> staffCategoryList = staffCategoryService.staffCategoryList();
-		return new ResponseEntity<List<StaffCategory>>(staffCategoryList, HttpStatus.OK);
+	public ResponseEntity<List<StaffCategoryDto>> getAllStaffCategory() {
+		List<StaffCategoryDto> staffCategoryList = staffCategoryService.staffCategoryList();
+		return new ResponseEntity<List<StaffCategoryDto>>(staffCategoryList, HttpStatus.OK);
 	}
 
 	// Delete StaffCategory

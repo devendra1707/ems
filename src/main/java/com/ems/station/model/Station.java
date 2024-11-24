@@ -5,10 +5,14 @@ import java.util.UUID;
 
 import org.hibernate.annotations.CreationTimestamp;
 
+import com.ems.state.model.State;
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.PrePersist;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
@@ -35,6 +39,10 @@ public class Station {
 	private Date modifiedDate;
 
 	private String uuid;
+
+	@ManyToOne
+	@JoinColumn(name = "state_id")
+	private State state;
 
 	@PrePersist
 	public void generateUuid() {

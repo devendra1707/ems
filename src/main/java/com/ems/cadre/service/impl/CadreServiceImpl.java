@@ -1,11 +1,14 @@
 package com.ems.cadre.service.impl;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
+import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 
 import com.ems.cadre.exception.CadreNotFoundException;
 import com.ems.cadre.model.Cadre;
+import com.ems.cadre.payload.CadreDto;
 import com.ems.cadre.repo.CadreRepo;
 import com.ems.cadre.service.CadreService;
 
@@ -13,39 +16,42 @@ import com.ems.cadre.service.CadreService;
 public class CadreServiceImpl implements CadreService {
 
 	private CadreRepo cadreRepo;
+	private ModelMapper modelMapper;
 
-	public CadreServiceImpl(CadreRepo cadreRepo) {
+	public CadreServiceImpl(CadreRepo cadreRepo, ModelMapper modelMapper) {
 		this.cadreRepo = cadreRepo;
+		this.modelMapper = modelMapper;
 	}
 
 	@Override
-	public Cadre createCadre(Cadre cadre) {
-		Cadre createCadre = cadreRepo.save(cadre);
-		return createCadre;
+	public CadreDto createCadre(CadreDto cadreDto) {
+		Cadre cadre = modelMapper.map(cadreDto, Cadre.class);
+		Cadre saveCadre = cadreRepo.save(cadre);
+		return modelMapper.map(saveCadre, CadreDto.class);
 	}
 
 	@Override
-	public Cadre updateCadre(int cadreId, Cadre cadre) {
-		Cadre getCadre = cadreRepo.findById(cadreId).orElseThrow(() -> new CadreNotFoundException("Cadre Not Found"));
-		if (getCadre != null) {
-			getCadre.setTitle(cadre.getTitle());
-			cadreRepo.save(getCadre);
-		}
+	public CadreDto updateCadre(int cadreId, CadreDto cadreDto) {
+		Cadre cadre = cadreRepo.findById(cadreId).orElseThrow(() -> new CadreNotFoundException("Cadre Not Found"));
+		cadre.setTitle(cadre.getTitle());
+		Cadre updateCadre = cadreRepo.save(cadre);
 
-		return getCadre;
+		return modelMapper.map(updateCadre, CadreDto.class);
 	}
 
 	@Override
-	public Cadre getCadre(int cadreId) {
+	public CadreDto getCadre(int cadreId) {
 
-		Cadre getCadre = cadreRepo.findById(cadreId).orElseThrow(() -> new CadreNotFoundException("Cadre Not Found"));
-		return getCadre;
+		Cadre cadre = cadreRepo.findById(cadreId).orElseThrow(() -> new CadreNotFoundException("Cadre Not Found"));
+		return modelMapper.map(cadre, CadreDto.class);
 	}
 
 	@Override
-	public List<Cadre> cadreList() {
+	public List<CadreDto> cadreList() {
 		List<Cadre> cadreList = cadreRepo.findAll();
-		return cadreList;
+		List<CadreDto> cadreDtos = cadreList.stream().map(cad -> modelMapper.map(cad, CadreDto.class))
+				.collect(Collectors.toList());
+		return cadreDtos;
 	}
 
 	@Override

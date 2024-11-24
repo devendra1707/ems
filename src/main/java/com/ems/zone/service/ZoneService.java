@@ -2,16 +2,16 @@ package com.ems.zone.service;
 
 import java.util.List;
 
-import com.ems.zone.model.Zone;
+import com.ems.zone.payload.ZoneDto;
 
 public interface ZoneService {
-	public Zone createZone(Zone zone);
+	public ZoneDto createZone(ZoneDto zoneDto, int adgId);
 
-	public Zone updateZone(int zoneId, Zone zone);
+	public ZoneDto updateZone(int zoneId, ZoneDto zoneDto, int adgId);
 
-	public Zone getZoneById(int zoneId);
+	public ZoneDto getZoneById(int zoneId);
 
-	public List<Zone> zoneList();
+	public List<ZoneDto> zoneList();
 
 	public void deleteZone(int zoneId);
 }

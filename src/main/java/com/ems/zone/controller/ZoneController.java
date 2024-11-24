@@ -11,9 +11,10 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.ems.zone.model.Zone;
+import com.ems.zone.payload.ZoneDto;
 import com.ems.zone.service.ZoneService;
 
 @RestController
@@ -27,32 +28,32 @@ public class ZoneController {
 
 	// Create ADG
 	@PostMapping("/create")
-	public ResponseEntity<Zone> createZone(@RequestBody Zone zone) {
-		Zone createZone = zoneService.createZone(zone);
+	public ResponseEntity<ZoneDto> createZone(@RequestBody ZoneDto zoneDto,@RequestParam int adgId) {
+		ZoneDto createZone = zoneService.createZone(zoneDto,adgId);
 
-		return new ResponseEntity<Zone>(createZone, HttpStatus.CREATED);
+		return new ResponseEntity<ZoneDto>(createZone, HttpStatus.CREATED);
 	}
 
 	// update ADG
 	@PutMapping("/update/{zoneId}")
-	public ResponseEntity<Zone> updateZone(@PathVariable("zoneId") int zoneId, @RequestBody Zone zone) {
-		Zone updateZone = zoneService.updateZone(zoneId, zone);
-		return new ResponseEntity<Zone>(updateZone, HttpStatus.OK);
+	public ResponseEntity<ZoneDto> updateZone(@PathVariable("zoneId") int zoneId, @RequestBody ZoneDto zoneDto,@RequestParam int adgId) {
+		ZoneDto updateZone = zoneService.updateZone(zoneId, zoneDto,adgId);
+		return new ResponseEntity<ZoneDto>(updateZone, HttpStatus.OK);
 	}
 
 	// Get Zone By Id
 	@GetMapping("/get/{zoneId}")
-	public ResponseEntity<Zone> getZoneById(@PathVariable("zoneId") int zoneId) {
-		Zone getZone = zoneService.getZoneById(zoneId);
-		return new ResponseEntity<Zone>(getZone, HttpStatus.OK);
+	public ResponseEntity<ZoneDto> getZoneById(@PathVariable("zoneId") int zoneId) {
+		ZoneDto getZone = zoneService.getZoneById(zoneId);
+		return new ResponseEntity<ZoneDto>(getZone, HttpStatus.OK);
 	}
 
 	// Get All Zone
 
 	@GetMapping("/all")
-	public ResponseEntity<List<Zone>> getAllZone() {
-		List<Zone> zoneList = zoneService.zoneList();
-		return new ResponseEntity<List<Zone>>(zoneList, HttpStatus.OK);
+	public ResponseEntity<List<ZoneDto>> getAllZone() {
+		List<ZoneDto> zoneList = zoneService.zoneList();
+		return new ResponseEntity<List<ZoneDto>>(zoneList, HttpStatus.OK);
 	}
 
 	// Delete Zone

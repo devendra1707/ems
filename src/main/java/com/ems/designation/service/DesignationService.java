@@ -2,17 +2,17 @@ package com.ems.designation.service;
 
 import java.util.List;
 
-import com.ems.designation.model.Designation;
+import com.ems.designation.payload.DesignationDto;
 
 public interface DesignationService {
 
-	public Designation createDesignation(Designation designation);
+	public DesignationDto createDesignation(DesignationDto designationDto, int staffCategoryId);
 
-	public Designation updateDesignation(int designationId, Designation designation);
+	public DesignationDto updateDesignation(int designationId, DesignationDto designationDto, int staffCategoryId);
 
-	public Designation getDesignation(int designationId);
+	public DesignationDto getDesignation(int designationId);
 
-	public List<Designation> designationList();
+	public List<DesignationDto> designationList();
 
 	public void deleteDesignation(int designationId);
 

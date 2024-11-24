@@ -11,9 +11,10 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.ems.adg.model.Adg;
+import com.ems.adg.payload.AdgDto;
 import com.ems.adg.service.AdgService;
 
 @RestController
@@ -28,32 +29,33 @@ public class AdgController {
 
 	// Create ADG
 	@PostMapping("/create")
-	public ResponseEntity<Adg> createAdg(@RequestBody Adg adg) {
-		Adg createAdg = adgService.createAdg(adg);
+	public ResponseEntity<AdgDto> createAdg(@RequestBody AdgDto adg, @RequestParam int regionId) {
+		AdgDto createAdg = adgService.createAdg(adg, regionId);
 
-		return new ResponseEntity<Adg>(createAdg, HttpStatus.CREATED);
+		return new ResponseEntity<AdgDto>(createAdg, HttpStatus.CREATED);
 	}
 
 	// update ADG
 	@PutMapping("/update/{adgId}")
-	public ResponseEntity<Adg> updateAdg(@PathVariable("adgId") int adgId, @RequestBody Adg adg) {
-		Adg updateAdg = adgService.updateAdg(adgId, adg);
-		return new ResponseEntity<Adg>(updateAdg, HttpStatus.OK);
+	public ResponseEntity<AdgDto> updateAdg(@PathVariable("adgId") int adgId, @RequestBody AdgDto adg,
+			@RequestParam int regionId) {
+		AdgDto updateAdg = adgService.updateAdg(adgId, adg, regionId);
+		return new ResponseEntity<AdgDto>(updateAdg, HttpStatus.OK);
 	}
 
 	// Get Adg By Id
 	@GetMapping("/get/{adgId}")
-	public ResponseEntity<Adg> getAdgById(@PathVariable("adgId") int adgId) {
-		Adg getAdg = adgService.getAdgById(adgId);
-		return new ResponseEntity<Adg>(getAdg, HttpStatus.OK);
+	public ResponseEntity<AdgDto> getAdgById(@PathVariable("adgId") int adgId) {
+		AdgDto getAdg = adgService.getAdgById(adgId);
+		return new ResponseEntity<AdgDto>(getAdg, HttpStatus.OK);
 	}
 
 	// Get All Adg
 
-	@GetMapping("/all")	
-	public ResponseEntity<List<Adg>> getAllAdg() {
-		List<Adg> adgList = adgService.adgList();
-		return new ResponseEntity<List<Adg>>(adgList, HttpStatus.OK);
+	@GetMapping("/all")
+	public ResponseEntity<List<AdgDto>> getAllAdg() {
+		List<AdgDto> adgList = adgService.adgList();
+		return new ResponseEntity<List<AdgDto>>(adgList, HttpStatus.OK);
 	}
 
 	// Delete Adg
@@ -61,5 +63,5 @@ public class AdgController {
 	public void deleteAdg(@PathVariable("adgId") int adgId) {
 		adgService.deleteAdg(adgId);
 	}
-	
+
 }

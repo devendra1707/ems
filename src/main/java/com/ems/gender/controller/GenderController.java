@@ -1,5 +1,7 @@
 package com.ems.gender.controller;
 
+import java.util.List;
+
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -11,7 +13,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.ems.gender.model.Gender;
+import com.ems.gender.payload.GenderDto;
 import com.ems.gender.service.GenderService;
 
 @RestController
@@ -25,28 +27,29 @@ public class GenderController {
 	}
 
 	@PostMapping("/create")
-	public ResponseEntity<Gender> createGender(@RequestBody Gender gender) {
-		Gender saveGender = genderService.createGender(gender);
-		return new ResponseEntity<Gender>(saveGender, HttpStatus.CREATED);
+	public ResponseEntity<GenderDto> createGender(@RequestBody GenderDto gender) {
+		GenderDto saveGender = genderService.createGender(gender);
+		return new ResponseEntity<GenderDto>(saveGender, HttpStatus.CREATED);
 	}
 
 	@PutMapping("/{genderId}")
-	public ResponseEntity<Gender> updateGender(@PathVariable("genderId") int genderId, @RequestBody Gender gender) {
-		Gender updateGender = genderService.updateGender(genderId, gender);
-		return new ResponseEntity<Gender>(updateGender, HttpStatus.OK);
+	public ResponseEntity<GenderDto> updateGender(@PathVariable("genderId") int genderId,
+			@RequestBody GenderDto gender) {
+		GenderDto updateGender = genderService.updateGender(genderId, gender);
+		return new ResponseEntity<GenderDto>(updateGender, HttpStatus.OK);
 	}
 
 	@GetMapping("/{genderId}")
-	public ResponseEntity<Gender> getGender(@PathVariable("genderId") int genderId) {
-		Gender getGender = genderService.getGenderById(genderId);
-		return new ResponseEntity<Gender>(getGender, HttpStatus.OK);
+	public ResponseEntity<GenderDto> getGender(@PathVariable("genderId") int genderId) {
+		GenderDto getGender = genderService.getGenderById(genderId);
+		return new ResponseEntity<GenderDto>(getGender, HttpStatus.OK);
 
 	}
 
 	@GetMapping("/all")
-	public ResponseEntity<Iterable<Gender>> getGenderDetails() {
-		Iterable<Gender> genderList = genderService.genderList();
-		return new ResponseEntity<Iterable<Gender>>(genderList, HttpStatus.OK);
+	public ResponseEntity<List<GenderDto>> getGenderDetails() {
+		List<GenderDto> genderList = genderService.genderList();
+		return new ResponseEntity<List<GenderDto>>(genderList, HttpStatus.OK);
 	}
 
 	@DeleteMapping("/{genderId}")

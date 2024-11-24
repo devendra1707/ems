@@ -2,16 +2,16 @@ package com.ems.employeestatus.service;
 
 import java.util.List;
 
-import com.ems.employeestatus.model.EmployeeStatus;
+import com.ems.employeestatus.payload.EmployeeStatusDto;
 
 public interface EmployeeStatusService {
-	public EmployeeStatus createEmployeeStatus(EmployeeStatus employeeStatus);
+	public EmployeeStatusDto createEmployeeStatus(EmployeeStatusDto employeeStatusDto);
 
-	public EmployeeStatus updateEmployeeStatus(int employeeStatusId, EmployeeStatus employeeStatus);
+	public EmployeeStatusDto updateEmployeeStatus(int employeeStatusId, EmployeeStatusDto employeeStatusDto);
 
-	public EmployeeStatus getEmployeeStatus(int employeeStatusId);
+	public EmployeeStatusDto getEmployeeStatus(int employeeStatusId);
 
-	public List<EmployeeStatus> employeeStatusList();
+	public List<EmployeeStatusDto> employeeStatusList();
 
 	public void deleteEmployeeStatus(int employeeStatusId);
 }

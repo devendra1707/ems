@@ -1,11 +1,14 @@
 package com.ems.payscale.service.impl;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
+import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 
 import com.ems.payscale.exception.PayScaleNotFoundException;
 import com.ems.payscale.model.PayScale;
+import com.ems.payscale.payload.PayScaleDto;
 import com.ems.payscale.repo.PayScaleRepo;
 import com.ems.payscale.service.PayScaleService;
 
@@ -13,44 +16,48 @@ import com.ems.payscale.service.PayScaleService;
 public class PayScaleServiceImpl implements PayScaleService {
 
 	private PayScaleRepo payScaleRepo;
+	private ModelMapper modelMapper;
 
-	public PayScaleServiceImpl(PayScaleRepo payScaleRepo) {
+	public PayScaleServiceImpl(PayScaleRepo payScaleRepo, ModelMapper modelMapper) {
 		this.payScaleRepo = payScaleRepo;
+		this.modelMapper = modelMapper;
 	}
 
 	@Override
-	public PayScale createPayScale(PayScale payScale) {
-		PayScale createPayScale = payScaleRepo.save(payScale);
-		return createPayScale;
+	public PayScaleDto createPayScale(PayScaleDto payScaleDto) {
+		PayScale payScale = modelMapper.map(payScaleDto, PayScale.class);
+		PayScale savePayScale = payScaleRepo.save(payScale);
+		return modelMapper.map(savePayScale, PayScaleDto.class);
 	}
 
 	@Override
-	public PayScale updatePayScale(int payScaleId, PayScale payScale) {
-		PayScale getPayScale = payScaleRepo.findById(payScaleId)
+	public PayScaleDto updatePayScale(int payScaleId, PayScaleDto payScaleDto) {
+		PayScale payScale = payScaleRepo.findById(payScaleId)
 				.orElseThrow(() -> new PayScaleNotFoundException("PayScale Not Found"));
-		if (getPayScale != null) {
 
-			getPayScale.setGradePay(payScale.getGradePay());
-			getPayScale.setLevel(payScale.getLevel());
-			getPayScale.setScaleOfPay(payScale.getScaleOfPay());
-			payScaleRepo.save(getPayScale);
-		}
+		payScale.setGradePay(payScale.getGradePay());
+		payScale.setLevel(payScale.getLevel());
+		payScale.setScaleOfPay(payScale.getScaleOfPay());
 
-		return getPayScale;
+		PayScale updaPayScale = payScaleRepo.save(payScale);
+
+		return modelMapper.map(updaPayScale, PayScaleDto.class);
 	}
 
 	@Override
-	public PayScale getPayScale(int payScaleId) {
+	public PayScaleDto getPayScale(int payScaleId) {
 
-		PayScale getPayScale = payScaleRepo.findById(payScaleId)
+		PayScale payScale = payScaleRepo.findById(payScaleId)
 				.orElseThrow(() -> new PayScaleNotFoundException("PayScale Not Found"));
-		return getPayScale;
+		return modelMapper.map(payScale, PayScaleDto.class);
 	}
 
 	@Override
-	public List<PayScale> payScaleList() {
+	public List<PayScaleDto> payScaleList() {
 		List<PayScale> payScaleList = payScaleRepo.findAll();
-		return payScaleList;
+		List<PayScaleDto> payScaleDtos = payScaleList.stream()
+				.map((paySc) -> modelMapper.map(paySc, PayScaleDto.class)).collect(Collectors.toList());
+		return payScaleDtos;
 	}
 
 	@Override

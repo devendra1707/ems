@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.ems.cadre.model.Cadre;
+import com.ems.cadre.payload.CadreDto;
 import com.ems.cadre.service.CadreService;
 
 @RestController
@@ -29,34 +29,34 @@ public class CadreController {
 	// Create Cadre
 
 	@PostMapping("/create")
-	public ResponseEntity<Cadre> createCadre(@RequestBody Cadre cadre) {
-		Cadre createCadre = cadreService.createCadre(cadre);
+	public ResponseEntity<CadreDto> createCadre(@RequestBody CadreDto cadre) {
+		CadreDto createCadre = cadreService.createCadre(cadre);
 
-		return new ResponseEntity<Cadre>(createCadre, HttpStatus.CREATED);
+		return new ResponseEntity<CadreDto>(createCadre, HttpStatus.CREATED);
 	}
 
 	// Update Cadre
 
 	@PutMapping("/update/{cadreId}")
-	public ResponseEntity<Cadre> updateCadre(@PathVariable("cadreId") int cadreId, @RequestBody Cadre cadre) {
-		Cadre updateCadre = cadreService.updateCadre(cadreId, cadre);
-		return new ResponseEntity<Cadre>(updateCadre, HttpStatus.OK);
+	public ResponseEntity<CadreDto> updateCadre(@PathVariable("cadreId") int cadreId, @RequestBody CadreDto cadre) {
+		CadreDto updateCadre = cadreService.updateCadre(cadreId, cadre);
+		return new ResponseEntity<CadreDto>(updateCadre, HttpStatus.OK);
 	}
 
 	// Get Cadre By Id
 
 	@GetMapping("/{cadreId}")
-	public ResponseEntity<Cadre> getCadreById(@PathVariable("cadreId") int cadreId) {
-		Cadre getCadre = cadreService.getCadre(cadreId);
-		return new ResponseEntity<Cadre>(getCadre, HttpStatus.OK);
+	public ResponseEntity<CadreDto> getCadreById(@PathVariable("cadreId") int cadreId) {
+		CadreDto getCadre = cadreService.getCadre(cadreId);
+		return new ResponseEntity<CadreDto>(getCadre, HttpStatus.OK);
 	}
 
 	// Get All Cadre
 
 	@GetMapping("/")
-	public ResponseEntity<List<Cadre>> getAllCadre() {
-		List<Cadre> cadreList = cadreService.cadreList();
-		return new ResponseEntity<List<Cadre>>(cadreList, HttpStatus.OK);
+	public ResponseEntity<List<CadreDto>> getAllCadre() {
+		List<CadreDto> cadreList = cadreService.cadreList();
+		return new ResponseEntity<List<CadreDto>>(cadreList, HttpStatus.OK);
 	}
 
 	// Delete Cadre

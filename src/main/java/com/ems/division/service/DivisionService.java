@@ -2,16 +2,16 @@ package com.ems.division.service;
 
 import java.util.List;
 
-import com.ems.division.model.Division;
+import com.ems.division.payload.DivisionDto;
 
 public interface DivisionService {
-	public Division createDivision(Division division);
+	public DivisionDto createDivision(DivisionDto divisionDto,int circleId);
 
-	public Division updateDivision(int divisionId, Division division);
+	public DivisionDto updateDivision(int divisionId, DivisionDto divisionDto,int circleId);
 
-	public Division getDivisionById(int divisionId);
+	public DivisionDto getDivisionById(int divisionId);
 
-	public List<Division> divisionList();
+	public List<DivisionDto> divisionList();
 
 	public void deleteDivision(int divisionId);
 }

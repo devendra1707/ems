@@ -1,52 +1,71 @@
 package com.ems.circle.service.impl;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
+import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 
 import com.ems.circle.exception.CircleNotFoundExcepption;
 import com.ems.circle.model.Circle;
+import com.ems.circle.payload.CircleDto;
 import com.ems.circle.repo.CircleRepo;
 import com.ems.circle.service.CircleService;
+import com.ems.zone.exception.ZoneNotFoundException;
+import com.ems.zone.model.Zone;
+import com.ems.zone.repo.ZoneRepo;
 
 @Service
 public class CircleServiceImpl implements CircleService {
 
 	private CircleRepo circleRepo;
+	private ModelMapper modelMapper;
+	private ZoneRepo zoneRepo;
 
-	public CircleServiceImpl(CircleRepo circleRepo) {
+	public CircleServiceImpl(CircleRepo circleRepo, ModelMapper modelMapper, ZoneRepo zoneRepo) {
 		this.circleRepo = circleRepo;
+		this.modelMapper = modelMapper;
+		this.zoneRepo = zoneRepo;
 	}
 
 	@Override
-	public Circle createCircle(Circle circle) {
+	public CircleDto createCircle(CircleDto circleDto, int zoneId) {
 
-		return circleRepo.save(circle);
+		Zone zone = zoneRepo.findById(zoneId).orElseThrow(() -> new ZoneNotFoundException("Zone Not Found"));
+
+		Circle circle = modelMapper.map(circleDto, Circle.class);
+		circle.setZone(zone);
+		Circle saveCircle = circleRepo.save(circle);
+		return modelMapper.map(saveCircle, CircleDto.class);
 	}
 
 	@Override
-	public Circle updateCircle(int circleId, Circle circle) {
-		Circle getCircle = circleRepo.findById(circleId)
+	public CircleDto updateCircle(int circleId, CircleDto circleDto, int zoneId) {
+		Circle circle = circleRepo.findById(circleId)
 				.orElseThrow(() -> new CircleNotFoundExcepption("Circle Not Found"));
-		if (getCircle != null) {
-			getCircle.setName(circle.getName());
-			circleRepo.save(getCircle);
-		}
-		return getCircle;
+		Zone zone = zoneRepo.findById(zoneId).orElseThrow(() -> new ZoneNotFoundException("Zone Not Found"));
+
+		circle.setName(circle.getName());
+		circle.setZone(zone);
+		Circle updateCircle = circleRepo.save(circle);
+
+		return modelMapper.map(updateCircle, CircleDto.class);
 	}
 
 	@Override
-	public Circle getCircle(int circleId) {
-		Circle getCircle = circleRepo.findById(circleId)
+	public CircleDto getCircle(int circleId) {
+		Circle circle = circleRepo.findById(circleId)
 				.orElseThrow(() -> new CircleNotFoundExcepption("Circle Not Found"));
-		return getCircle;
+		return modelMapper.map(circle, CircleDto.class);
 	}
 
 	@Override
-	public List<Circle> circleList() {
+	public List<CircleDto> circleList() {
 
 		List<Circle> circleList = circleRepo.findAll();
-		return circleList;
+		List<CircleDto> circleDtos = circleList.stream().map(cir -> modelMapper.map(cir, CircleDto.class))
+				.collect(Collectors.toList());
+		return circleDtos;
 	}
 
 	@Override

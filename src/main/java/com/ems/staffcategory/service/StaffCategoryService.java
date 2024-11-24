@@ -2,17 +2,17 @@ package com.ems.staffcategory.service;
 
 import java.util.List;
 
-import com.ems.staffcategory.model.StaffCategory;
+import com.ems.staffcategory.payload.StaffCategoryDto;
 
 public interface StaffCategoryService {
-	
-	public StaffCategory createStaffCategory(StaffCategory staffCategory);
 
-	public StaffCategory updateStaffCategory(int staffCategoryId, StaffCategory staffCategory);
+	public StaffCategoryDto createStaffCategory(StaffCategoryDto staffCategoryDto);
 
-	public StaffCategory getStaffCategory(int staffCategoryId);
+	public StaffCategoryDto updateStaffCategory(int staffCategoryId, StaffCategoryDto staffCategoryDto);
 
-	public List<StaffCategory> staffCategoryList();
+	public StaffCategoryDto getStaffCategory(int staffCategoryId);
+
+	public List<StaffCategoryDto> staffCategoryList();
 
 	public void deleteStaffCategory(int staffCategoryId);
 }

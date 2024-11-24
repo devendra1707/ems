@@ -2,17 +2,17 @@ package com.ems.adg.service;
 
 import java.util.List;
 
-import com.ems.adg.model.Adg;
+import com.ems.adg.payload.AdgDto;
 
 public interface AdgService {
 
-	public Adg createAdg(Adg adg);
+	public AdgDto createAdg(AdgDto adgDto, int regionId);
 
-	public Adg updateAdg(int adgId, Adg adg);
+	public AdgDto updateAdg(int adgId, AdgDto adgDto, int regionId);
 
-	public Adg getAdgById(int adgId);
+	public AdgDto getAdgById(int adgId);
 
-	public List<Adg> adgList();
+	public List<AdgDto> adgList();
 
 	public void deleteAdg(int adgId);
 

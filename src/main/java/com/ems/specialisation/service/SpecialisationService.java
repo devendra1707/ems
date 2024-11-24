@@ -3,15 +3,16 @@ package com.ems.specialisation.service;
 import java.util.List;
 
 import com.ems.specialisation.model.Specialisation;
+import com.ems.specialisation.payload.SpecialisationDto;
 
 public interface SpecialisationService {
-	public Specialisation createSpecialisation(Specialisation specialisation);
+	public SpecialisationDto createSpecialisation(SpecialisationDto specialisationDto);
 
-	public Specialisation updateSpecialisation(int specialisationId, Specialisation specialisation);
+	public SpecialisationDto updateSpecialisation(int specialisationId, SpecialisationDto specialisationDto);
 
-	public Specialisation getSpecialisation(int specialisationId);
+	public SpecialisationDto getSpecialisation(int specialisationId);
 
-	public List<Specialisation> specialisationList();
+	public List<SpecialisationDto> specialisationList();
 
 	public void deleteSpecialisation(int specialisationId);
 }

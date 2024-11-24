@@ -1,9 +1,14 @@
 package com.ems.gender.service.impl;
 
+import java.util.List;
+import java.util.stream.Collectors;
+
+import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 
 import com.ems.gender.exception.GenderNotFoundException;
 import com.ems.gender.model.Gender;
+import com.ems.gender.payload.GenderDto;
 import com.ems.gender.repo.GenderRepository;
 import com.ems.gender.service.GenderService;
 
@@ -11,40 +16,43 @@ import com.ems.gender.service.GenderService;
 public class GenderServiceImpl implements GenderService {
 
 	private GenderRepository genderRepository;
+	private ModelMapper modelMapper;
 
-	public GenderServiceImpl(GenderRepository genderRepository) {
+	public GenderServiceImpl(GenderRepository genderRepository, ModelMapper modelMapper) {
 		this.genderRepository = genderRepository;
+		this.modelMapper = modelMapper;
 	}
 
 	@Override
-	public Gender createGender(Gender gender) {
-		Gender createGender = genderRepository.save(gender);
-		return createGender;
+	public GenderDto createGender(GenderDto genderDto) {
+		Gender gender = modelMapper.map(genderDto, Gender.class);
+		Gender saveGender = genderRepository.save(gender);
+		return modelMapper.map(saveGender, GenderDto.class);
 	}
 
 	@Override
-	public Gender updateGender(int genderId, Gender gender) {
-		Gender genderDetails = genderRepository.findById(genderId)
+	public GenderDto updateGender(int genderId, GenderDto genderDto) {
+		Gender gender = genderRepository.findById(genderId)
 				.orElseThrow(() -> new GenderNotFoundException("Gender Not Found With this" + genderId));
-		if (genderDetails != null) {
-			genderDetails.setName(gender.getName());
-		}
+		gender.setName(gender.getName());
 
-		Gender saveGender = genderRepository.save(genderDetails);
-		return saveGender;
+		Gender saveGender = genderRepository.save(gender);
+		return modelMapper.map(saveGender, GenderDto.class);
 	}
 
 	@Override
-	public Gender getGenderById(int genderId) {
-		Gender getSingleGender = genderRepository.findById(genderId)
+	public GenderDto getGenderById(int genderId) {
+		Gender gender = genderRepository.findById(genderId)
 				.orElseThrow(() -> new GenderNotFoundException("Gender Not Found With this" + genderId));
-		return getSingleGender;
+		return modelMapper.map(gender, GenderDto.class);
 	}
 
 	@Override
-	public Iterable<Gender> genderList() {
-		Iterable<Gender> genderList = genderRepository.findAll();
-		return genderList;
+	public List<GenderDto> genderList() {
+		List<Gender> genderList = genderRepository.findAll();
+		List<GenderDto> genderDto = genderList.stream().map(gen -> modelMapper.map(gen, GenderDto.class))
+				.collect(Collectors.toList());
+		return genderDto;
 	}
 
 	@Override

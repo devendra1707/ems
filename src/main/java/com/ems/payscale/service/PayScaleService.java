@@ -2,16 +2,16 @@ package com.ems.payscale.service;
 
 import java.util.List;
 
-import com.ems.payscale.model.PayScale;
+import com.ems.payscale.payload.PayScaleDto;
 
 public interface PayScaleService {
-	public PayScale createPayScale(PayScale payScale);
+	public PayScaleDto createPayScale(PayScaleDto payScaleDto);
 
-	public PayScale updatePayScale(int payScaleId, PayScale payScale);
+	public PayScaleDto updatePayScale(int payScaleId, PayScaleDto payScaleDto);
 
-	public PayScale getPayScale(int payScaleId);
+	public PayScaleDto getPayScale(int payScaleId);
 
-	public List<PayScale> payScaleList();
+	public List<PayScaleDto> payScaleList();
 
 	public void deletePayScale(int payScaleId);
 }

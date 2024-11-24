@@ -1,9 +1,11 @@
 package com.ems.gender.repo;
 
-import org.springframework.data.repository.CrudRepository;
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.stereotype.Repository;
 
 import com.ems.gender.model.Gender;
 
-public interface GenderRepository extends CrudRepository<Gender, Integer> {
+@Repository
+public interface GenderRepository extends JpaRepository<Gender, Integer> {
 
 }

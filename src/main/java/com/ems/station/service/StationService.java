@@ -2,16 +2,16 @@ package com.ems.station.service;
 
 import java.util.List;
 
-import com.ems.station.model.Station;
+import com.ems.station.payload.StationDto;
 
 public interface StationService {
-	public Station createStation(Station station);
+	public StationDto createStation(StationDto stationDto,int stateId);
 
-	public Station updateStation(int stationId, Station station);
+	public StationDto updateStation(int stationId, StationDto stationDto,int stateId);
 
-	public Station getStationById(int stationId);
+	public StationDto getStationById(int stationId);
 
-	public List<Station> stationList();
+	public List<StationDto> stationList();
 
 	public void deleteStation(int stationId);
 }

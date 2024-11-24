@@ -1,11 +1,17 @@
 package com.ems.division.service.impl;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
+import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 
+import com.ems.circle.exception.CircleNotFoundExcepption;
+import com.ems.circle.model.Circle;
+import com.ems.circle.repo.CircleRepo;
 import com.ems.division.exception.DivisionNotFoundException;
 import com.ems.division.model.Division;
+import com.ems.division.payload.DivisionDto;
 import com.ems.division.repo.DivisionRepo;
 import com.ems.division.service.DivisionService;
 
@@ -13,45 +19,57 @@ import com.ems.division.service.DivisionService;
 public class DivisionServiceImpl implements DivisionService {
 
 	private DivisionRepo divisionRepo;
+	private ModelMapper modelMapper;
+	private CircleRepo circleRepo;
 
-	public DivisionServiceImpl(DivisionRepo divisionRepo) {
+	public DivisionServiceImpl(DivisionRepo divisionRepo, ModelMapper modelMapper, CircleRepo circleRepo) {
 		this.divisionRepo = divisionRepo;
+		this.modelMapper = modelMapper;
+		this.circleRepo = circleRepo;
 	}
 
 	@Override
-	public Division createDivision(Division division) {
+	public DivisionDto createDivision(DivisionDto divisionDto, int circleId) {
 
-		Division createDivision = divisionRepo.save(division);
+		Circle circle = circleRepo.findById(circleId)
+				.orElseThrow(() -> new CircleNotFoundExcepption("Circle Not Found"));
 
-		return createDivision;
+		Division division = modelMapper.map(divisionDto, Division.class);
+		division.setCircle(circle);
+		Division saveDivision = divisionRepo.save(division);
+
+		return modelMapper.map(saveDivision, DivisionDto.class);
 	}
 
 	@Override
-	public Division updateDivision(int divisionId, Division division) {
-		Division getDivision = divisionRepo.findById(divisionId)
+	public DivisionDto updateDivision(int divisionId, DivisionDto divisionDto, int circleId) {
+		Division division = divisionRepo.findById(divisionId)
 				.orElseThrow(() -> new DivisionNotFoundException("Division Not found"));
 
-		if (getDivision != null) {
-			getDivision.setName(division.getName());
-			divisionRepo.save(getDivision);
-		}
+		Circle circle = circleRepo.findById(circleId)
+				.orElseThrow(() -> new CircleNotFoundExcepption("Circle Not Found"));
 
-		return getDivision;
+		division.setName(division.getName());
+		division.setCircle(circle);
+		Division updateDivision = divisionRepo.save(division);
+
+		return modelMapper.map(updateDivision, DivisionDto.class);
 	}
 
 	@Override
-	public Division getDivisionById(int divisionId) {
+	public DivisionDto getDivisionById(int divisionId) {
 		Division getDivision = divisionRepo.findById(divisionId)
 				.orElseThrow(() -> new DivisionNotFoundException("Division Not found"));
-		return getDivision;
+		return modelMapper.map(getDivision, DivisionDto.class);
 	}
 
 	@Override
-	public List<Division> divisionList() {
+	public List<DivisionDto> divisionList() {
 
 		List<Division> divisionList = divisionRepo.findAll();
-
-		return divisionList;
+		List<DivisionDto> divisionDtos = divisionList.stream().map(div -> modelMapper.map(div, DivisionDto.class))
+				.collect(Collectors.toList());
+		return divisionDtos;
 	}
 
 	@Override
@@ -61,5 +79,4 @@ public class DivisionServiceImpl implements DivisionService {
 
 	}
 
-	
 }

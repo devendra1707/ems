@@ -11,9 +11,10 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.ems.designation.model.Designation;
+import com.ems.designation.payload.DesignationDto;
 import com.ems.designation.service.DesignationService;
 
 @RestController
@@ -29,35 +30,37 @@ public class DesignationController {
 	// Create Designation
 
 	@PostMapping("/create")
-	public ResponseEntity<Designation> createDesignation(@RequestBody Designation designation) {
-		Designation createDesignation = designationService.createDesignation(designation);
+	public ResponseEntity<DesignationDto> createDesignation(@RequestBody DesignationDto designation,
+			@RequestParam int staffCategoryId) {
+		DesignationDto createDesignation = designationService.createDesignation(designation, staffCategoryId);
 
-		return new ResponseEntity<Designation>(createDesignation, HttpStatus.CREATED);
+		return new ResponseEntity<DesignationDto>(createDesignation, HttpStatus.CREATED);
 	}
 
 	// Update Designation
 
 	@PutMapping("/update/{designationId}")
-	public ResponseEntity<Designation> updateDesignation(@PathVariable("designationId") int designationId,
-			@RequestBody Designation designation) {
-		Designation updateDesignation = designationService.updateDesignation(designationId, designation);
-		return new ResponseEntity<Designation>(updateDesignation, HttpStatus.OK);
+	public ResponseEntity<DesignationDto> updateDesignation(@PathVariable("designationId") int designationId,
+			@RequestBody DesignationDto designation, @RequestParam int staffCategoryId) {
+		DesignationDto updateDesignation = designationService.updateDesignation(designationId, designation,
+				staffCategoryId);
+		return new ResponseEntity<DesignationDto>(updateDesignation, HttpStatus.OK);
 	}
 
 	// Get Designation By Id
 
 	@GetMapping("/{designationId}")
-	public ResponseEntity<Designation> getDesignationById(@PathVariable("designationId") int designationId) {
-		Designation getDesignation = designationService.getDesignation(designationId);
-		return new ResponseEntity<Designation>(getDesignation, HttpStatus.OK);
+	public ResponseEntity<DesignationDto> getDesignationById(@PathVariable("designationId") int designationId) {
+		DesignationDto getDesignation = designationService.getDesignation(designationId);
+		return new ResponseEntity<DesignationDto>(getDesignation, HttpStatus.OK);
 	}
 
 	// Get All Designation
 
 	@GetMapping("/")
-	public ResponseEntity<List<Designation>> getAllDesignation() {
-		List<Designation> designationList = designationService.designationList();
-		return new ResponseEntity<List<Designation>>(designationList, HttpStatus.OK);
+	public ResponseEntity<List<DesignationDto>> getAllDesignation() {
+		List<DesignationDto> designationList = designationService.designationList();
+		return new ResponseEntity<List<DesignationDto>>(designationList, HttpStatus.OK);
 	}
 
 	// Delete Designation

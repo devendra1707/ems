@@ -11,9 +11,10 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.ems.postheld.model.PostHeld;
+import com.ems.postheld.payload.PostHeldDto;
 import com.ems.postheld.service.PostHeldService;
 
 @RestController
@@ -29,35 +30,36 @@ public class PostHeldController {
 	// Create PostHeld
 
 	@PostMapping("/create")
-	public ResponseEntity<PostHeld> createPostHeld(@RequestBody PostHeld postHeld) {
-		PostHeld createPostHeld = postHeldService.createPostHeld(postHeld);
+	public ResponseEntity<PostHeldDto> createPostHeld(@RequestBody PostHeldDto postHeld,
+			@RequestParam int staffCategoryId) {
+		PostHeldDto createPostHeld = postHeldService.createPostHeld(postHeld, staffCategoryId);
 
-		return new ResponseEntity<PostHeld>(createPostHeld, HttpStatus.CREATED);
+		return new ResponseEntity<PostHeldDto>(createPostHeld, HttpStatus.CREATED);
 	}
 
 	// Update PostHeld
 
 	@PutMapping("/update/{postHeldId}")
-	public ResponseEntity<PostHeld> updatePostHeld(@PathVariable("postHeldId") int postHeldId,
-			@RequestBody PostHeld postHeld) {
-		PostHeld updatePostHeld = postHeldService.updatePostHeld(postHeldId, postHeld);
-		return new ResponseEntity<PostHeld>(updatePostHeld, HttpStatus.OK);
+	public ResponseEntity<PostHeldDto> updatePostHeld(@PathVariable("postHeldId") int postHeldId,
+			@RequestBody PostHeldDto postHeld, @RequestParam int staffCategoryId) {
+		PostHeldDto updatePostHeld = postHeldService.updatePostHeld(postHeldId, postHeld, staffCategoryId);
+		return new ResponseEntity<PostHeldDto>(updatePostHeld, HttpStatus.OK);
 	}
 
 	// Get PostHeld By Id
 
 	@GetMapping("/{postHeldId}")
-	public ResponseEntity<PostHeld> getPostHeldById(@PathVariable("postHeldId") int postHeldId) {
-		PostHeld getPostHeld = postHeldService.getPostHeld(postHeldId);
-		return new ResponseEntity<PostHeld>(getPostHeld, HttpStatus.OK);
+	public ResponseEntity<PostHeldDto> getPostHeldById(@PathVariable("postHeldId") int postHeldId) {
+		PostHeldDto getPostHeld = postHeldService.getPostHeld(postHeldId);
+		return new ResponseEntity<PostHeldDto>(getPostHeld, HttpStatus.OK);
 	}
 
 	// Get All PostHeld
 
 	@GetMapping("/")
-	public ResponseEntity<List<PostHeld>> getAllPostHeld() {
-		List<PostHeld> postHeldList = postHeldService.postHeldList();
-		return new ResponseEntity<List<PostHeld>>(postHeldList, HttpStatus.OK);
+	public ResponseEntity<List<PostHeldDto>> getAllPostHeld() {
+		List<PostHeldDto> postHeldList = postHeldService.postHeldList();
+		return new ResponseEntity<List<PostHeldDto>>(postHeldList, HttpStatus.OK);
 	}
 
 	// Delete PostHeld

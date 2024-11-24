@@ -2,17 +2,17 @@ package com.ems.department.service;
 
 import java.util.List;
 
-import com.ems.department.model.Department;
+import com.ems.department.payload.DepartmentDto;
 
 public interface DepartmentService {
 
-	public Department createDepartment(Department department);
+	public DepartmentDto createDepartment(DepartmentDto departmentDto);
 
-	public Department updateDepartment(int departmentId, Department department);
+	public DepartmentDto updateDepartment(int departmentId, DepartmentDto departmentDto);
 
-	public Department getDepartment(int departmentId);
+	public DepartmentDto getDepartment(int departmentId);
 
-	public List<Department> departmentList();
+	public List<DepartmentDto> departmentList();
 
 	public void deleteDepartment(int departmentId);
 

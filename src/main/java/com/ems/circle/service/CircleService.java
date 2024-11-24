@@ -2,13 +2,17 @@ package com.ems.circle.service;
 
 import java.util.List;
 
-import com.ems.circle.model.Circle;
+import com.ems.circle.payload.CircleDto;
 
 public interface CircleService {
 
-	public Circle createCircle(Circle circle);
-	public Circle updateCircle(int circleId,Circle circle);
-	public Circle getCircle(int circleId);
-	public List<Circle> circleList();
+	public CircleDto createCircle(CircleDto circleDto, int zoneId);
+
+	public CircleDto updateCircle(int circleId, CircleDto circleDto, int zoneId);
+
+	public CircleDto getCircle(int circleId);
+
+	public List<CircleDto> circleList();
+
 	public void deleteCircle(int circleId);
 }

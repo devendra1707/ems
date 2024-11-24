@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.ems.employeegroup.model.EmployeeGroup;
+import com.ems.employeegroup.payload.EmployeeGroupDto;
 import com.ems.employeegroup.service.EmployeeGroupService;
 
 @RestController
@@ -28,35 +28,35 @@ public class EmployeeGroupController {
 	// Create EmployeeGroup
 
 	@PostMapping("/create")
-	public ResponseEntity<EmployeeGroup> createEmployeeGroup(@RequestBody EmployeeGroup employeeGroup) {
-		EmployeeGroup createEmployeeGroup = employeeGroupService.createEmployeeGroup(employeeGroup);
+	public ResponseEntity<EmployeeGroupDto> createEmployeeGroup(@RequestBody EmployeeGroupDto employeeGroup) {
+		EmployeeGroupDto createEmployeeGroup = employeeGroupService.createEmployeeGroup(employeeGroup);
 
-		return new ResponseEntity<EmployeeGroup>(createEmployeeGroup, HttpStatus.CREATED);
+		return new ResponseEntity<EmployeeGroupDto>(createEmployeeGroup, HttpStatus.CREATED);
 	}
 
 	// Update EmployeeGroup
 
 	@PutMapping("/update/{employeeGroupId}")
-	public ResponseEntity<EmployeeGroup> updateEmployeeGroup(@PathVariable("employeeGroupId") int employeeGroupId,
-			@RequestBody EmployeeGroup employeeGroup) {
-		EmployeeGroup updateEmployeeGroup = employeeGroupService.updateEmployeeGroup(employeeGroupId, employeeGroup);
-		return new ResponseEntity<EmployeeGroup>(updateEmployeeGroup, HttpStatus.OK);
+	public ResponseEntity<EmployeeGroupDto> updateEmployeeGroup(@PathVariable("employeeGroupId") int employeeGroupId,
+			@RequestBody EmployeeGroupDto employeeGroup) {
+		EmployeeGroupDto updateEmployeeGroup = employeeGroupService.updateEmployeeGroup(employeeGroupId, employeeGroup);
+		return new ResponseEntity<EmployeeGroupDto>(updateEmployeeGroup, HttpStatus.OK);
 	}
 
 	// Get EmployeeGroup By Id
 
 	@GetMapping("/{employeeGroupId}")
-	public ResponseEntity<EmployeeGroup> getEmployeeGroupById(@PathVariable("employeeGroupId") int employeeGroupId) {
-		EmployeeGroup getEmployeeGroup = employeeGroupService.getEmployeeGroup(employeeGroupId);
-		return new ResponseEntity<EmployeeGroup>(getEmployeeGroup, HttpStatus.OK);
+	public ResponseEntity<EmployeeGroupDto> getEmployeeGroupById(@PathVariable("employeeGroupId") int employeeGroupId) {
+		EmployeeGroupDto getEmployeeGroup = employeeGroupService.getEmployeeGroup(employeeGroupId);
+		return new ResponseEntity<EmployeeGroupDto>(getEmployeeGroup, HttpStatus.OK);
 	}
 
 	// Get All EmployeeGroup
 
 	@GetMapping("/")
-	public ResponseEntity<List<EmployeeGroup>> getAllEmployeeGroup() {
-		List<EmployeeGroup> employeeGroupList = employeeGroupService.employeeGroupList();
-		return new ResponseEntity<List<EmployeeGroup>>(employeeGroupList, HttpStatus.OK);
+	public ResponseEntity<List<EmployeeGroupDto>> getAllEmployeeGroup() {
+		List<EmployeeGroupDto> employeeGroupList = employeeGroupService.employeeGroupList();
+		return new ResponseEntity<List<EmployeeGroupDto>>(employeeGroupList, HttpStatus.OK);
 	}
 
 	// Delete EmployeeGroup

@@ -1,16 +1,18 @@
 package com.ems.gender.service;
 
-import com.ems.gender.model.Gender;
+import java.util.List;
+
+import com.ems.gender.payload.GenderDto;
 
 public interface GenderService {
 
-	public Gender createGender(Gender gender);
+	public GenderDto createGender(GenderDto genderDto);
 
-	public Gender updateGender(int genderId, Gender gender);
+	public GenderDto updateGender(int genderId, GenderDto genderDto);
 
-	public Gender getGenderById(int genderId);
+	public GenderDto getGenderById(int genderId);
 
-	public Iterable<Gender> genderList();
+	public List<GenderDto> genderList();
 
 	public void deleteGender(int genderId);
 

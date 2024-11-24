@@ -1,57 +1,65 @@
 package com.ems.department.service.impl;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
+import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 
 import com.ems.department.exception.DepartmentNotFoundException;
 import com.ems.department.model.Department;
+import com.ems.department.payload.DepartmentDto;
 import com.ems.department.repo.DepartmentRepo;
 import com.ems.department.service.DepartmentService;
 
 @Service
-public class DepartmentServiceImpl implements DepartmentService{
-	
+public class DepartmentServiceImpl implements DepartmentService {
+
 	private DepartmentRepo departmentRepo;
+	private ModelMapper modelMapper;
 
-	public DepartmentServiceImpl(DepartmentRepo departmentRepo) {
+	public DepartmentServiceImpl(DepartmentRepo departmentRepo, ModelMapper modelMapper) {
 		this.departmentRepo = departmentRepo;
-	}
-	
-	@Override
-	public Department createDepartment(Department department) {
-		Department createDepartment = departmentRepo.save(department);
-		return createDepartment;
+		this.modelMapper = modelMapper;
 	}
 
 	@Override
-	public Department updateDepartment(int departmentId, Department department) {
-		Department getDepartment = departmentRepo.findById(departmentId).orElseThrow(() -> new DepartmentNotFoundException("Department Not Found"));
-		if (getDepartment != null) {
-			getDepartment.setTitle(department.getTitle());
-			departmentRepo.save(getDepartment);
-		}
-
-		return getDepartment;
+	public DepartmentDto createDepartment(DepartmentDto departmentDto) {
+		Department createDepartment = modelMapper.map(departmentDto, Department.class);
+		Department saveDepartment = departmentRepo.save(createDepartment);
+		return modelMapper.map(saveDepartment, DepartmentDto.class);
 	}
 
 	@Override
-	public Department getDepartment(int departmentId) {
+	public DepartmentDto updateDepartment(int departmentId, DepartmentDto departmentDto) {
+		Department department = departmentRepo.findById(departmentId)
+				.orElseThrow(() -> new DepartmentNotFoundException("Department Not Found"));
 
-		Department getDepartment = departmentRepo.findById(departmentId).orElseThrow(() -> new DepartmentNotFoundException("Department Not Found"));
-		return getDepartment;
+		department.setTitle(department.getTitle());
+		Department updaDepartment = departmentRepo.save(department);
+
+		return modelMapper.map(updaDepartment, DepartmentDto.class);
 	}
 
 	@Override
-	public List<Department> departmentList() {
+	public DepartmentDto getDepartment(int departmentId) {
+
+		Department department = departmentRepo.findById(departmentId)
+				.orElseThrow(() -> new DepartmentNotFoundException("Department Not Found"));
+		return modelMapper.map(department, DepartmentDto.class);
+	}
+
+	@Override
+	public List<DepartmentDto> departmentList() {
 		List<Department> departmentList = departmentRepo.findAll();
-		return departmentList;
+		List<DepartmentDto> departmentDtos = departmentList.stream()
+				.map(dept -> modelMapper.map(dept, DepartmentDto.class)).collect(Collectors.toList());
+		return departmentDtos;
 	}
 
 	@Override
 	public void deleteDepartment(int departmentId) {
 		departmentRepo.deleteById(departmentId);
 	}
-
 
 }

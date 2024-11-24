@@ -1,52 +1,59 @@
 package com.ems.staffcategory.service.impl;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
+import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 
 import com.ems.staffcategory.exception.StaffCategoryNotFoundException;
 import com.ems.staffcategory.model.StaffCategory;
+import com.ems.staffcategory.payload.StaffCategoryDto;
 import com.ems.staffcategory.repo.StaffCategoryRepo;
 import com.ems.staffcategory.service.StaffCategoryService;
 
 @Service
 public class StaffCategoryServiceImpl implements StaffCategoryService {
 	private StaffCategoryRepo staffCategoryRepo;
+	private ModelMapper modelMapper;
 
-	public StaffCategoryServiceImpl(StaffCategoryRepo staffCategoryRepo) {
+	public StaffCategoryServiceImpl(StaffCategoryRepo staffCategoryRepo, ModelMapper modelMapper) {
 		this.staffCategoryRepo = staffCategoryRepo;
+		this.modelMapper = modelMapper;
 	}
 
 	@Override
-	public StaffCategory createStaffCategory(StaffCategory staffCategory) {
-		StaffCategory createStaffCategory = staffCategoryRepo.save(staffCategory);
-		return createStaffCategory;
+	public StaffCategoryDto createStaffCategory(StaffCategoryDto staffCategoryDto) {
+		StaffCategory staffCategory = modelMapper.map(staffCategoryDto, StaffCategory.class);
+		StaffCategory saveStaffCategory = staffCategoryRepo.save(staffCategory);
+		return modelMapper.map(saveStaffCategory, StaffCategoryDto.class);
 	}
 
 	@Override
-	public StaffCategory updateStaffCategory(int staffCategoryId, StaffCategory staffCategory) {
-		StaffCategory getStaffCategory = staffCategoryRepo.findById(staffCategoryId)
+	public StaffCategoryDto updateStaffCategory(int staffCategoryId, StaffCategoryDto staffCategoryDto) {
+		StaffCategory staffCategory = staffCategoryRepo.findById(staffCategoryId)
 				.orElseThrow(() -> new StaffCategoryNotFoundException("StaffCategory Not Found"));
-		if (getStaffCategory != null) {
-			getStaffCategory.setTitle(staffCategory.getTitle());
-			staffCategoryRepo.save(getStaffCategory);
-		}
 
-		return getStaffCategory;
+		staffCategory.setTitle(staffCategory.getTitle());
+		StaffCategory updateStaffCategory = staffCategoryRepo.save(staffCategory);
+
+		return modelMapper.map(updateStaffCategory, StaffCategoryDto.class);
 	}
 
 	@Override
-	public StaffCategory getStaffCategory(int staffCategoryId) {
+	public StaffCategoryDto getStaffCategory(int staffCategoryId) {
 
-		StaffCategory getStaffCategory = staffCategoryRepo.findById(staffCategoryId)
+		StaffCategory staffCategory = staffCategoryRepo.findById(staffCategoryId)
 				.orElseThrow(() -> new StaffCategoryNotFoundException("StaffCategory Not Found"));
-		return getStaffCategory;
+		return modelMapper.map(staffCategory, StaffCategoryDto.class);
 	}
 
 	@Override
-	public List<StaffCategory> staffCategoryList() {
-		List<StaffCategory> staffCategoryList = staffCategoryRepo.findAll();
-		return staffCategoryList;
+	public List<StaffCategoryDto> staffCategoryList() {
+		List<StaffCategory> staffCategories = staffCategoryRepo.findAll();
+		List<StaffCategoryDto> staffCategoryDtos = staffCategories.stream()
+				.map((staff) -> modelMapper.map(staff, StaffCategoryDto.class)).collect(Collectors.toList());
+		return staffCategoryDtos;
 	}
 
 	@Override

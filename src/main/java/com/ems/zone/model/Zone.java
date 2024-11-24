@@ -1,14 +1,25 @@
 package com.ems.zone.model;
 
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 import java.util.UUID;
 
 import org.hibernate.annotations.CreationTimestamp;
 
+import com.ems.adg.model.Adg;
+import com.ems.circle.model.Circle;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.PrePersist;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
@@ -36,6 +47,14 @@ public class Zone {
 
 	private String uuid;
 
+	@OneToMany(mappedBy = "zone", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+	@JsonIgnore
+	private List<Circle> circle = new ArrayList<>();
+
+	@ManyToOne
+	@JoinColumn(name = "adg_id")
+	private Adg adg;
+	
 	@PrePersist
 	public void generateUuid() {
 		if (this.uuid == null || this.uuid.isEmpty()) {
