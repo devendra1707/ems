@@ -48,8 +48,8 @@ public class DesignationServiceImpl implements DesignationService {
 		StaffCategory staffCategory = staffCategoryRepo.findById(staffCategoryId)
 				.orElseThrow(() -> new RegionNotFoundException("Staff Category Not Found"));
 
-		designation.setTitle(designation.getTitle());
-		designation.setLevel(designation.getLevel());
+		designation.setTitle(designationDto.getTitle());
+		designation.setLevel(designationDto.getLevel());
 		designation.setStaffCategory(staffCategory);
 		Designation updateDesignation = designationRepo.save(designation);
 

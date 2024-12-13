@@ -42,7 +42,7 @@ public class State {
 	private String totalProjectsCompleted;
 	private String totalOffices;
 	private String stateCode;
-	private String Path;
+	private String path;
 
 	@CreationTimestamp
 	private Date createdDate;

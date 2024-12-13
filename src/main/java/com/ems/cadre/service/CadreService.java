@@ -2,7 +2,6 @@ package com.ems.cadre.service;
 
 import java.util.List;
 
-import com.ems.cadre.model.Cadre;
 import com.ems.cadre.payload.CadreDto;
 
 public interface CadreService {

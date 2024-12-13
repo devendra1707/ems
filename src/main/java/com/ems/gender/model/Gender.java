@@ -28,7 +28,7 @@ public class Gender {
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private int genderId;
 
-	private String name;
+	private String title;
 
 	@CreationTimestamp
 	private Date createdDate;

@@ -35,7 +35,7 @@ public class RegionServiceImpl implements RegionService {
 		Region region = regionRepo.findById(regionId)
 				.orElseThrow(() -> new RegionNotFoundException("Region Not found"));
 
-		region.setName(region.getName());
+		region.setName(regionDto.getName());
 
 		Region updaRegion = regionRepo.save(region);
 

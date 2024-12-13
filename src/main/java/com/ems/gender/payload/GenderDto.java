@@ -11,7 +11,7 @@ import lombok.Setter;
 public class GenderDto {
 	private int genderId;
 
-	private String name;
+	private String title;
 
 	private Date createdDate;
 

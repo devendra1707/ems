@@ -33,7 +33,7 @@ public class EmployeeGroupServiceImpl implements EmployeeGroupService {
 	public EmployeeGroupDto updateEmployeeGroup(int employeeGroupId, EmployeeGroupDto employeeGroupDto) {
 		EmployeeGroup employeeGroup = employeeGroupRepo.findById(employeeGroupId)
 				.orElseThrow(() -> new EmployeeGroupNotFoundException("EmployeeGroup Not Found"));
-		employeeGroup.setTitle(employeeGroup.getTitle());
+		employeeGroup.setTitle(employeeGroupDto.getTitle());
 		EmployeeGroup updateEmployeeGroup = employeeGroupRepo.save(employeeGroup);
 
 		return modelMapper.map(updateEmployeeGroup, EmployeeGroupDto.class);

@@ -33,7 +33,7 @@ public class EmployeeStatusServiceImpl implements EmployeeStatusService {
 	public EmployeeStatusDto updateEmployeeStatus(int employeeStatusId, EmployeeStatusDto employeeStatusDto) {
 		EmployeeStatus employeeStatus = employeeStatusRepo.findById(employeeStatusId)
 				.orElseThrow(() -> new EmployeeStatusNotFoundException("EmployeeStatus Not Found"));
-		employeeStatus.setTitle(employeeStatus.getTitle());
+		employeeStatus.setTitle(employeeStatusDto.getTitle());
 		EmployeeStatus updateEmployeeStatus = employeeStatusRepo.save(employeeStatus);
 
 		return modelMapper.map(updateEmployeeStatus, EmployeeStatusDto.class);

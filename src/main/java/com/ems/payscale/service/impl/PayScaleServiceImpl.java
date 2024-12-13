@@ -35,9 +35,9 @@ public class PayScaleServiceImpl implements PayScaleService {
 		PayScale payScale = payScaleRepo.findById(payScaleId)
 				.orElseThrow(() -> new PayScaleNotFoundException("PayScale Not Found"));
 
-		payScale.setGradePay(payScale.getGradePay());
-		payScale.setLevel(payScale.getLevel());
-		payScale.setScaleOfPay(payScale.getScaleOfPay());
+		payScale.setGradePay(payScaleDto.getGradePay());
+		payScale.setLevel(payScaleDto.getLevel());
+		payScale.setScaleOfPay(payScaleDto.getScaleOfPay());
 
 		PayScale updaPayScale = payScaleRepo.save(payScale);
 

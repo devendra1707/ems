@@ -49,7 +49,7 @@ public class DivisionServiceImpl implements DivisionService {
 		Circle circle = circleRepo.findById(circleId)
 				.orElseThrow(() -> new CircleNotFoundExcepption("Circle Not Found"));
 
-		division.setName(division.getName());
+		division.setName(divisionDto.getName());
 		division.setCircle(circle);
 		Division updateDivision = divisionRepo.save(division);
 

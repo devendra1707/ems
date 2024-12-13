@@ -34,7 +34,8 @@ public class GenderServiceImpl implements GenderService {
 	public GenderDto updateGender(int genderId, GenderDto genderDto) {
 		Gender gender = genderRepository.findById(genderId)
 				.orElseThrow(() -> new GenderNotFoundException("Gender Not Found With this" + genderId));
-		gender.setName(gender.getName());
+		
+		gender.setTitle(genderDto.getTitle());
 
 		Gender saveGender = genderRepository.save(gender);
 		return modelMapper.map(saveGender, GenderDto.class);

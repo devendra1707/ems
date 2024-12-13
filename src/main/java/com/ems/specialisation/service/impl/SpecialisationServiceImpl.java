@@ -35,7 +35,7 @@ public class SpecialisationServiceImpl implements SpecialisationService {
 		Specialisation specialisation = specialisationRepo.findById(specialisationId)
 				.orElseThrow(() -> new SpecialisationNotFoundException("Specialisation Not Found"));
 
-		specialisation.setTitle(specialisation.getTitle());
+		specialisation.setTitle(specialisationDto.getTitle());
 		Specialisation updatSpecialisation = specialisationRepo.save(specialisation);
 
 		return modelMapper.map(updatSpecialisation, SpecialisationDto.class);

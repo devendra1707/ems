@@ -28,8 +28,8 @@ public class EmployeeStatusController {
 	// Create EmployeeStatus
 
 	@PostMapping("/create")
-	public ResponseEntity<EmployeeStatusDto> createEmployeeStatus(@RequestBody EmployeeStatusDto employeeStatus) {
-		EmployeeStatusDto createEmployeeStatus = employeeStatusService.createEmployeeStatus(employeeStatus);
+	public ResponseEntity<EmployeeStatusDto> createEmployeeStatus(@RequestBody EmployeeStatusDto employeeStatusDto) {
+		EmployeeStatusDto createEmployeeStatus = employeeStatusService.createEmployeeStatus(employeeStatusDto);
 
 		return new ResponseEntity<EmployeeStatusDto>(createEmployeeStatus, HttpStatus.CREATED);
 	}

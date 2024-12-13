@@ -48,7 +48,7 @@ public class PostHeldServiceImpl implements PostHeldService {
 		StaffCategory staffCategory = categoryRepo.findById(staffCategoryId)
 				.orElseThrow(() -> new StaffCategoryNotFoundException("Staff Category Not Found"));
 
-		postHeld.setTitle(postHeld.getTitle());
+		postHeld.setTitle(postHeldDto.getTitle());
 		postHeld.setStaffCategory(staffCategory);
 		PostHeld updateHeld = postHeldRepo.save(postHeld);
 

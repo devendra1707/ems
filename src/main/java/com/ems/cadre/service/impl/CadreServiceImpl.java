@@ -33,7 +33,7 @@ public class CadreServiceImpl implements CadreService {
 	@Override
 	public CadreDto updateCadre(int cadreId, CadreDto cadreDto) {
 		Cadre cadre = cadreRepo.findById(cadreId).orElseThrow(() -> new CadreNotFoundException("Cadre Not Found"));
-		cadre.setTitle(cadre.getTitle());
+		cadre.setTitle(cadreDto.getTitle());
 		Cadre updateCadre = cadreRepo.save(cadre);
 
 		return modelMapper.map(updateCadre, CadreDto.class);

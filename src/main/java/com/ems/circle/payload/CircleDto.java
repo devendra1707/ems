@@ -1,10 +1,7 @@
 package com.ems.circle.payload;
 
-import java.util.ArrayList;
 import java.util.Date;
-import java.util.List;
 
-import com.ems.division.model.Division;
 import com.ems.zone.model.Zone;
 
 import lombok.Getter;

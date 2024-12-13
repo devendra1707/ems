@@ -40,7 +40,7 @@ public class ReservationClasificationServiceImpl implements ReservationClasifica
 				.findById(reservationClasificationId)
 				.orElseThrow(() -> new ReservationClasificationNotFoundException("ReservationClasification Not Found"));
 
-		reservationClasification.setTitle(reservationClasification.getTitle());
+		reservationClasification.setTitle(reservationClasificationDto.getTitle());
 		ReservationClasification updateReservationClasification = reservationClasificationRepo
 				.save(reservationClasification);
 

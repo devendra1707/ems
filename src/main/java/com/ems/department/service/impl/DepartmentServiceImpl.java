@@ -35,7 +35,7 @@ public class DepartmentServiceImpl implements DepartmentService {
 		Department department = departmentRepo.findById(departmentId)
 				.orElseThrow(() -> new DepartmentNotFoundException("Department Not Found"));
 
-		department.setTitle(department.getTitle());
+		department.setTitle(departmentDto.getTitle());
 		Department updaDepartment = departmentRepo.save(department);
 
 		return modelMapper.map(updaDepartment, DepartmentDto.class);

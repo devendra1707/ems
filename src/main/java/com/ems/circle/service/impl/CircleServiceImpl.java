@@ -45,7 +45,7 @@ public class CircleServiceImpl implements CircleService {
 				.orElseThrow(() -> new CircleNotFoundExcepption("Circle Not Found"));
 		Zone zone = zoneRepo.findById(zoneId).orElseThrow(() -> new ZoneNotFoundException("Zone Not Found"));
 
-		circle.setName(circle.getName());
+		circle.setName(circleDto.getName());
 		circle.setZone(zone);
 		Circle updateCircle = circleRepo.save(circle);
 

@@ -34,7 +34,7 @@ public class StaffCategoryServiceImpl implements StaffCategoryService {
 		StaffCategory staffCategory = staffCategoryRepo.findById(staffCategoryId)
 				.orElseThrow(() -> new StaffCategoryNotFoundException("StaffCategory Not Found"));
 
-		staffCategory.setTitle(staffCategory.getTitle());
+		staffCategory.setTitle(staffCategoryDto.getTitle());
 		StaffCategory updateStaffCategory = staffCategoryRepo.save(staffCategory);
 
 		return modelMapper.map(updateStaffCategory, StaffCategoryDto.class);
