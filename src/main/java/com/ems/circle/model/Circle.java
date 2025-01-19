@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.UUID;
 
 import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
 
 import com.ems.division.model.Division;
 import com.ems.zone.model.Zone;
@@ -44,6 +45,7 @@ public class Circle {
 	@CreationTimestamp
 	private Date createdDate;
 
+	@UpdateTimestamp
 	private Date modifiedDate;
 
 	private String uuid;

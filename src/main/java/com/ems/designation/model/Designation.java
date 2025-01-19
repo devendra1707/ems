@@ -4,6 +4,7 @@ import java.util.Date;
 import java.util.UUID;
 
 import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
 
 import com.ems.staffcategory.model.StaffCategory;
 
@@ -38,6 +39,7 @@ public class Designation {
 	@CreationTimestamp
 	private Date createdDate;
 
+	@UpdateTimestamp
 	private Date modifiedDate;
 
 	private String uuid;

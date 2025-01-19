@@ -4,12 +4,12 @@ import java.util.Date;
 import java.util.UUID;
 
 import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.persistence.PrePersist;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -24,28 +24,25 @@ import lombok.Setter;
 @Table(name = "gender")
 public class Gender {
 
-	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
-	private int genderId;
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private int genderId;
 
-	private String title;
+    private String title;
 
-	@CreationTimestamp
-	private Date createdDate;
+    @CreationTimestamp
+    private Date createdDate; // Automatically set when the entity is created.
 
-	private Date modifiedDate;
+    @UpdateTimestamp
+    private Date modifiedDate; // Automatically updated when the entity is modified.
 
-	private String uuid;
+    private String uuid;
 
-	@PrePersist
-	public void generateUuid() {
-		if (this.uuid == null || this.uuid.isEmpty()) {
-			this.uuid = UUID.randomUUID().toString();
-		}
-		// Set modifiedDate only when creating the entity
-		if (this.modifiedDate == null) {
-			this.modifiedDate = new Date();
-		}
-	}
-
+    // Generate UUID before persisting the entity
+    @jakarta.persistence.PrePersist
+    public void generateUuid() {
+        if (this.uuid == null || this.uuid.isEmpty()) {
+            this.uuid = UUID.randomUUID().toString();
+        }
+    }
 }
